@@ -1,1 +1,13 @@
+baseURL = 'https://adash28.github.io/One_more_harukikage-blog/'
+languageCode = 'en-us'
+title = 'One More Harukikage Blog'
 theme = 'PaperMod'
+
+[params]
+    # This makes the "Blue Triangle" (Dark Mode toggle) behave correctly
+    defaultTheme = "auto"
+    displayFullContent = false
+    showReadingTime = true
+    
+    # This is for your Deep Learning math formulas later
+    math = true
