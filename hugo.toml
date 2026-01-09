@@ -8,3 +8,15 @@ theme = 'PaperMod'
     displayFullContent = false
     showReadingTime = true
     math = true
+
+relativeURLs = true
+canonifyURLs = true
+
+[[menu.main]]
+    name = "AIGC "
+    url = "/aigc/"
+    weight = 10
+[[menu.main]]
+    name = "深度学习"
+    url = "/dl/"
+    weight = 20
