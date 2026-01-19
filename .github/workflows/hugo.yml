@@ -36,7 +36,7 @@ jobs:
           fetch-depth: 0
       
       - name: Setup Pages
-        id: pages  # ← ADD THIS ID!
+        id: pages
         uses: actions/configure-pages@v5
       
       - name: Build with Hugo
@@ -46,8 +46,7 @@ jobs:
         run: |
           hugo \
             --gc \
-            --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"  # ← CHANGED: Use 'pages' instead of 'setup-pages'
+            --minify
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
