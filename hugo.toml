@@ -6,6 +6,12 @@ theme = "PaperMod"
 # THIS IS CRITICAL - Add this line:
 #canonifyURLs = true
 
+# 开启中文/日文/韩文 (CJK) 支持
+hasCJKLanguage = true
+
+# 自动清理 URL 中的特殊字符（防止乱码）
+removePathAccents = true
+
 [params]
     defaultTheme = "auto"
     displayFullContent = false
@@ -15,7 +21,7 @@ theme = "PaperMod"
     ShowPostNavLinks = true
     ShowCodeCopyButtons = true
     ShowRssButtonInSectionTermList = true
-    
+
     # 首页配置
     [params.homeInfoParams]
         Title = "Welcome to One More Harukikage Lab"
