@@ -4,7 +4,7 @@ title = "One More Harukikage Lab"
 theme = "PaperMod"
 
 # THIS IS CRITICAL - Add this line:
-canonifyURLs = true
+#canonifyURLs = true
 
 [params]
     defaultTheme = "auto"
