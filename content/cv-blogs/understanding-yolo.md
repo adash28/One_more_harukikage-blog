@@ -1,7 +1,7 @@
 ---
 title: "Understanding YOLO Object Detection"
 date: 2026-01-18
-draft: true
+draft: false
 tags: ["Computer Vision", "Object Detection", "YOLO", "Deep Learning"]
 categories: ["CV Blogs"]
 description: "A deep dive into YOLO architecture and its evolution"
