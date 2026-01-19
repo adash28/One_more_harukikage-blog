@@ -1,11 +1,10 @@
 ---
 title: "Quant Trading"
-description: "Quantitative trading strategies, analysis, and market insights"
+description: "量化交易策略、分析学习blog"
 layout: "section"
 ---
 
 # 📈 Quantitative Trading
 
-Exploring the intersection of mathematics, programming, and financial markets through quantitative analysis and algorithmic trading.
-
+栏目施工中~
 
