@@ -8,15 +8,40 @@ theme = 'PaperMod'
     displayFullContent = false
     showReadingTime = true
     math = true
+    ShowBreadCrumbs = true
+    ShowPostNavLinks = true
+    ShowCodeCopyButtons = true
+    ShowRssButtonInSectionTermList = true
+    
+    # 首页配置
+    [params.homeInfoParams]
+        Title = "Welcome to One More Harukikage Lab"
+        Content = "Exploring AIGC, Computer Vision, and Quantitative Trading"
 
 relativeURLs = true
 canonifyURLs = true
 
+# 专业导航栏配置
 [[menu.main]]
-    name = "AIGC "
-    url = "/aigc/"
+    identifier = "aigc-works"
+    name = "AIGC Works"
+    url = "/aigc-works/"
     weight = 10
+
 [[menu.main]]
-    name = "深度学习"
-    url = "/dl/"
+    identifier = "cv-blogs"
+    name = "CV Blogs"
+    url = "/cv-blogs/"
     weight = 20
+
+[[menu.main]]
+    identifier = "quant-trading"
+    name = "Quant Trading"
+    url = "/quant-trading/"
+    weight = 30
+
+[[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 40
