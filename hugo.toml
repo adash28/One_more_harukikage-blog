@@ -24,8 +24,8 @@ removePathAccents = true
 
     # 首页配置
     [params.homeInfoParams]
-        Title = "Welcome to One More Harukikage Lab"
-        Content = "Exploring AIGC, Computer Vision, and Quantitative Trading"
+        Title = "欢迎来到再弹一曲春日影个人网站~"
+        Content = ""
 
 relativeURLs = true
 canonifyURLs = true

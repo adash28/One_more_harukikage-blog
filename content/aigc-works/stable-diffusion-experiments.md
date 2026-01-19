@@ -1,7 +1,7 @@
 ---
 title: "My First Stable Diffusion Experiments"
 date: 2026-01-19
-draft: true
+draft: false
 tags: ["AIGC", "Stable Diffusion", "Image Generation"]
 categories: ["AIGC Works"]
 description: "Exploring creative possibilities with Stable Diffusion"
