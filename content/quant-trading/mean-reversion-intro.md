@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Mean Reversion Strategies"
 date: 2026-01-17
-draft: false
+draft: true
 tags: ["Quant Trading", "Mean Reversion", "Trading Strategies", "Python"]
 categories: ["Quant Trading"]
 description: "Building and backtesting a simple mean reversion strategy"
