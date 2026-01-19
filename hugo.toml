@@ -1,6 +1,6 @@
 baseURL = "https://adash28.github.io/One_more_harukikage-blog/"
 languageCode = "en-us"
-title = "One More Harukikage Lab"
+title = "One More Harukikage personal site"
 theme = "PaperMod"
 
 # THIS IS CRITICAL - Add this line:
@@ -14,6 +14,7 @@ removePathAccents = true
 
 [params]
     defaultTheme = "auto"
+    mainSections = [] 
     displayFullContent = false
     showReadingTime = true
     math = true
