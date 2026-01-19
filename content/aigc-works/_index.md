@@ -1,6 +1,5 @@
 ---
 title: "AIGC Works"
-description: "AI Generated Content "
 layout: "section"
 ---
 
