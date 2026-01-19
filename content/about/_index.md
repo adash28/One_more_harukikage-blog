@@ -1,6 +1,5 @@
 ---
 title: "About"
-description: "About One More Harukikage Lab"
 layout: "single"
 ---
 
