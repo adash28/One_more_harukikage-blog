@@ -35,19 +35,18 @@ removePathAccents = true
     # Giscus 评论系统配置
     # 请访问 https://giscus.app/zh-CN 获取以下配置信息
     [params.giscus]
-        repo = "adash28/One_more_harukikage-blog"  # 您的 GitHub 仓库（格式：用户名/仓库名）
-        repoID = ""  # 仓库 ID（在 giscus 网站获取）
-        category = "Announcements"  # 讨论分类
-        categoryID = ""  # 分类 ID（在 giscus 网站获取）
-        mapping = "pathname"  # 页面与讨论的映射关系
-        strict = "0"  # 严格匹配
-        reactionsEnabled = "1"  # 启用反应
-        emitMetadata = "0"  # 发送元数据
-        inputPosition = "bottom"  # 输入框位置
-        theme = "preferred_color_scheme"  # 主题（自动适配）
-        lang = "zh-CN"  # 语言
-        loading = "lazy"  # 懒加载
-
+    repo = "adash28/One_more_harukikage-blog"
+    repoID = "R_kgDOQ2dxxw"              # 从 giscus 网站获取
+    category = "Announcements"
+    categoryID = "DIC_kwDOQ2dxx84C136Z"          # 从 giscus 网站获取
+    mapping = "pathname"
+    strict = "0"
+    reactionsEnabled = "1"
+    emitMetadata = "0"
+    inputPosition = "bottom"
+    theme = "preferred_color_scheme"
+    lang = "zh-CN"
+    loading = "lazy"
 relativeURLs = true
 canonifyURLs = true
 
