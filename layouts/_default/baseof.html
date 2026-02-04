@@ -20,53 +20,55 @@
 <body id="top">
 {{- end }}
     
-    {{- /* 欢迎屏幕 - 只在首页显示 */ -}}
-    {{- if .IsHome }}
-    <div id="welcome-screen">
-        <div class="particles" id="particles"></div>
-        <div class="welcome-content">
-            <img src="{{ "images/welcome-logo.svg" | absURL }}" alt="Welcome Logo" class="welcome-logo" onerror="this.src='https://via.placeholder.com/150/667eea/ffffff?text=欢迎'">
-            <h1 class="welcome-title">{{ site.Params.welcomeTitle | default "欢迎来到再弹一曲春日影的世界" }}</h1>
-            <p class="welcome-subtitle">{{ site.Params.welcomeSubtitle | default "探索创意，分享知识，共同成长" }}</p>
-            <p class="welcome-hint">✨ 点击任意处进入 ✨</p>
-        </div>
+{{- /* 欢迎屏幕 - 只在首页显示 */ -}}
+{{- if .IsHome }}
+<div id="welcome-screen">
+    {{- /* 背景图片层 */ -}}
+    <div class="welcome-background"></div>
+    <div class="particles" id="particles"></div>
+    <div class="welcome-content">
+        <img src="{{ "images/welcome-logo.svg" | absURL }}" alt="Welcome Logo" class="welcome-logo" onerror="this.src='https://via.placeholder.com/150/667eea/ffffff?text=欢迎'">
+        <h1 class="welcome-title">{{ site.Params.welcomeTitle | default "欢迎来到再弹一曲春日影的个人主页" }}</h1>
+        <p class="welcome-subtitle">{{ site.Params.welcomeSubtitle | default "hope you enjoy it" }}</p>
+        <p class="welcome-hint">✨ 点击任意处进入 ✨</p>
     </div>
-    
-    <script>
-        // 欢迎屏幕控制
-        (function() {
-            const welcomeScreen = document.getElementById('welcome-screen');
-            const body = document.body;
+</div>
+
+<script>
+    // 欢迎屏幕控制
+    (function() {
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const body = document.body;
+        
+        // 检查是否已经访问过
+        const hasVisited = sessionStorage.getItem('hasVisited');
+        
+        if (hasVisited) {
+            welcomeScreen.classList.add('hidden');
+        } else {
+            body.classList.add('welcome-active');
             
-            // 检查是否已经访问过
-            const hasVisited = sessionStorage.getItem('hasVisited');
-            
-            if (hasVisited) {
+            // 点击进入
+            welcomeScreen.addEventListener('click', function() {
                 welcomeScreen.classList.add('hidden');
-            } else {
-                body.classList.add('welcome-active');
-                
-                // 点击进入
-                welcomeScreen.addEventListener('click', function() {
-                    welcomeScreen.classList.add('hidden');
-                    body.classList.remove('welcome-active');
-                    sessionStorage.setItem('hasVisited', 'true');
-                });
-            }
-            
-            // 创建粒子效果
-            const particlesContainer = document.getElementById('particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                particlesContainer.appendChild(particle);
-            }
-        })();
-    </script>
-    {{- end }}
+                body.classList.remove('welcome-active');
+                sessionStorage.setItem('hasVisited', 'true');
+            });
+        }
+        
+        // 创建粒子效果
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+    })();
+</script>
+{{- end }}
     
     {{ partialCached "header.html" . .Page -}}
     <main class="main">

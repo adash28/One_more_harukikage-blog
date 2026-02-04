@@ -24,13 +24,13 @@ removePathAccents = true
     ShowRssButtonInSectionTermList = true
 
     # 欢迎屏幕配置
-    welcomeTitle = "欢迎来到再弹一曲春日影的世界"
-    welcomeSubtitle = "探索创意，分享知识，共同成长"
+    welcomeTitle = "欢迎来到再弹一曲春日影的个人主页"
+    welcomeSubtitle = "Hope you enjoy it"
 
     # 首页配置
     [params.homeInfoParams]
         Title = "欢迎来到再弹一曲春日影个人网站~"
-        Content = ""
+        Content = "首页施工中~"
 
     # Giscus 评论系统配置
     # 请访问 https://giscus.app/zh-CN 获取以下配置信息
