@@ -1,0 +1,61 @@
+{{- /* comments.html - 评论系统集成 */ -}}
+
+{{- if not (.Param "hideComments") }}
+<div class="giscus">
+    <h3 class="comments-title">💬 评论区</h3>
+    <p style="font-size: 0.9em; opacity: 0.7; margin-bottom: 1rem;">
+        欢迎留下您的想法和建议！
+    </p>
+    
+    {{- if site.Params.giscus }}
+    <script src="https://giscus.app/client.js"
+            data-repo="{{ site.Params.giscus.repo }}"
+            data-repo-id="{{ site.Params.giscus.repoID }}"
+            data-category="{{ site.Params.giscus.category }}"
+            data-category-id="{{ site.Params.giscus.categoryID }}"
+            data-mapping="{{ site.Params.giscus.mapping | default "pathname" }}"
+            data-strict="{{ site.Params.giscus.strict | default "0" }}"
+            data-reactions-enabled="{{ site.Params.giscus.reactionsEnabled | default "1" }}"
+            data-emit-metadata="{{ site.Params.giscus.emitMetadata | default "0" }}"
+            data-input-position="{{ site.Params.giscus.inputPosition | default "bottom" }}"
+            data-theme="{{ site.Params.giscus.theme | default "preferred_color_scheme" }}"
+            data-lang="{{ site.Params.giscus.lang | default "zh-CN" }}"
+            data-loading="{{ site.Params.giscus.loading | default "lazy" }}"
+            crossorigin="anonymous"
+            async>
+    </script>
+    
+    {{- /* 主题切换适配 */ -}}
+    <script>
+        // 监听主题切换
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                setTimeout(function() {
+                    const theme = document.documentElement.getAttribute('data-theme');
+                    const giscusTheme = theme === 'dark' ? 'dark' : 'light';
+                    const iframe = document.querySelector('iframe.giscus-frame');
+                    if (iframe) {
+                        iframe.contentWindow.postMessage({
+                            giscus: {
+                                setConfig: {
+                                    theme: giscusTheme
+                                }
+                            }
+                        }, 'https://giscus.app');
+                    }
+                }, 100);
+            });
+        }
+    </script>
+    {{- else }}
+    <div style="padding: 2rem; text-align: center; background: var(--code-bg); border-radius: 8px;">
+        <p style="margin-bottom: 1rem;">⚠️ 评论系统尚未配置</p>
+        <p style="font-size: 0.9em; opacity: 0.7;">
+            请在 <code>hugo.toml</code> 中配置 giscus 参数。
+            <a href="https://giscus.app/zh-CN" target="_blank" style="color: var(--primary);">获取配置</a>
+        </p>
+    </div>
+    {{- end }}
+</div>
+{{- end }}
