@@ -1,0 +1,43 @@
+{{- $pages := where site.RegularPages "Section" .Section -}}
+{{- if and (gt (len $pages) 1) (in $pages . ) -}}
+<nav class="paginav">
+  {{- if eq .Type "novels" }}
+      {{- /* Novel Logic: Left = Older (Prev Chapter), Right = Newer (Next Chapter) 
+             Assuming Date Descending Order: [Ch3, Ch2, Ch1]
+             Current: Ch2
+             Next in List: Ch3 (Newer) -> "Next Chapter"
+             Prev in List: Ch1 (Older) -> "Previous Chapter"
+      */ -}}
+      {{- with $pages.Prev . }}
+      <a class="prev" href="{{ .Permalink }}">
+        <span class="title">« 上一章</span>
+        <br>
+        <span>{{- .Title -}}</span>
+      </a>
+      {{- end }}
+      {{- with $pages.Next . }}
+      <a class="next" href="{{ .Permalink }}">
+        <span class="title">下一章 »</span>
+        <br>
+        <span>{{- .Title -}}</span>
+      </a>
+      {{- end }}
+  {{- else }}
+      {{- /* Default Logic (PaperMod): Left = Newer, Right = Older */ -}}
+      {{- with $pages.Next . }}
+      <a class="prev" href="{{ .Permalink }}">
+        <span class="title">« {{ i18n "prev_page" }}</span>
+        <br>
+        <span>{{- .Title -}}</span>
+      </a>
+      {{- end }}
+      {{- with $pages.Prev . }}
+      <a class="next" href="{{ .Permalink }}">
+        <span class="title">{{ i18n "next_page" }} »</span>
+        <br>
+        <span>{{- .Title -}}</span>
+      </a>
+      {{- end }}
+  {{- end }}
+</nav>
+{{- end -}}

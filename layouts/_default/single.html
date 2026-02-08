@@ -1,6 +1,6 @@
 {{- define "main" }}
 
-<article class="post-single">
+<article class="post-single {{ .Type }}">
   <header class="post-header">
     {{ partial "breadcrumbs.html" . }}
     <h1 class="post-title entry-hint-parent">
@@ -40,6 +40,95 @@
     {{- partial "anchored_headings.html" .Content -}}
     {{- else }}{{ .Content }}{{ end }}
   </div>
+
+  {{- /* 仅为 novels 类型添加虚拟分页脚本 */ -}}
+  {{- if eq .Type "novels" }}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const content = document.querySelector('.post-content');
+        if (!content) return;
+
+        // 配置：每页显示的段落数
+        const paragraphsPerPage = 15; 
+        
+        // 获取所有顶级段落和标题
+        const children = Array.from(content.children);
+        if (children.length <= paragraphsPerPage) return; // 内容太少不需要分页
+
+        // 创建分页控制栏
+        const controls = document.createElement('div');
+        controls.className = 'novel-pagination-controls';
+        controls.innerHTML = `
+            <button class="novel-pagination-btn" id="prevPage" disabled>上一页</button>
+            <div class="novel-pagination-info">
+                <span id="currentPage">1</span> / <span id="totalPages">1</span>
+            </div>
+            <button class="novel-pagination-btn" id="nextPage">下一页</button>
+        `;
+        
+        // 创建进度条
+        const progressContainer = document.createElement('div');
+        progressContainer.className = 'novel-progress-container';
+        progressContainer.innerHTML = '<div class="novel-progress-bar" id="readingProgress"></div>';
+        
+        // 插入到内容上方和下方
+        content.parentNode.insertBefore(progressContainer, content);
+        content.parentNode.insertBefore(controls.cloneNode(true), content); // 顶部控制栏
+        content.parentNode.insertBefore(controls, content.nextSibling);   // 底部控制栏
+
+        // 分页逻辑
+        let currentPage = 1;
+        const totalPages = Math.ceil(children.length / paragraphsPerPage);
+        
+        // 更新显示
+        function updateDisplay() {
+            // 隐藏所有元素
+            children.forEach(el => el.style.display = 'none');
+            
+            // 显示当前页元素
+            const start = (currentPage - 1) * paragraphsPerPage;
+            const end = start + paragraphsPerPage;
+            children.slice(start, end).forEach(el => el.style.display = 'block');
+            
+            // 更新所有控制栏的状态
+            document.querySelectorAll('#currentPage').forEach(el => el.textContent = currentPage);
+            document.querySelectorAll('#totalPages').forEach(el => el.textContent = totalPages);
+            
+            document.querySelectorAll('#prevPage').forEach(btn => btn.disabled = currentPage === 1);
+            document.querySelectorAll('#nextPage').forEach(btn => btn.disabled = currentPage === totalPages);
+            
+            // 更新进度条
+            const progress = (currentPage / totalPages) * 100;
+            document.getElementById('readingProgress').style.width = `${progress}%`;
+            
+            // 滚动到顶部 (保留一点偏移量)
+            const headerHeight = document.querySelector('.header').offsetHeight || 0;
+            window.scrollTo({
+                top: content.offsetTop - headerHeight - 20,
+                behavior: 'smooth'
+            });
+        }
+        
+        // 绑定事件
+        document.body.addEventListener('click', function(e) {
+            if (e.target.closest('#prevPage')) {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updateDisplay();
+                }
+            } else if (e.target.closest('#nextPage')) {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updateDisplay();
+                }
+            }
+        });
+
+        // 初始化
+        updateDisplay();
+    });
+  </script>
+  {{- end }}
   {{- end }}
 
   <footer class="post-footer">
