@@ -1,4 +1,4 @@
-{{- $pages := (where site.RegularPages "Section" .Section).ByWeight -}}
+{{- $pages := sort (where site.RegularPages "Section" .Section) "Weight" "asc" -}}
 {{- if and (gt (len $pages) 1) (in $pages . ) -}}
 <nav class="paginav">
   {{- if eq .Type "novels" }}
