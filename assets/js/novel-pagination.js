@@ -2,14 +2,18 @@ document.addEventListener("DOMContentLoaded", function() {
     // Only run on novel pages
     const postContent = document.querySelector('.post-content');
     // Check for 'novels' class on body or post-single (depending on implementation)
-    // Also check if we are in a 'novels' section by URL or other marker if class isn't reliable
     const isNovel = document.body.classList.contains('type-novels') || 
                    document.querySelector('.post-single.novels') ||
                    window.location.pathname.includes('/novels/');
                    
     if (!postContent || !isNovel) return;
 
-    const paragraphs = Array.from(postContent.children);
+    // Filter valid content elements (paragraphs, headers, etc.)
+    // We ignore script tags, style tags, and empty text nodes
+    const paragraphs = Array.from(postContent.children).filter(el => {
+        return !['SCRIPT', 'STYLE'].includes(el.tagName) && el.textContent.trim().length > 0;
+    });
+
     // If content is short, don't paginate
     if (paragraphs.length < 20) return;
 
@@ -32,11 +36,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const end = start + PARAGRAPHS_PER_PAGE;
         const pageParas = paragraphs.slice(start, end);
 
+        // We need to move the actual elements, so we use appendChild
         pageParas.forEach(p => pageDiv.appendChild(p));
         pagesContainer.appendChild(pageDiv);
     }
 
-    // Clear original content and append pages
+    // Clear original content (but keep things we didn't move, like maybe some hidden inputs or scripts if any remained)
+    // Actually, safest is to clear all and append our container
     postContent.innerHTML = '';
     postContent.appendChild(pagesContainer);
 
@@ -68,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.body.appendChild(progressBar);
 
     // Event Listeners
+    // Use document-level delegation to ensure events work even if DOM updates
     const prevBtn = document.getElementById('novel-prev');
     const nextBtn = document.getElementById('novel-next');
     const pageInfo = document.getElementById('novel-page-info');
@@ -76,28 +83,32 @@ document.addEventListener("DOMContentLoaded", function() {
         if (newPage < 1 || newPage > totalPages) return;
 
         // Hide current
-        pagesContainer.querySelector(`.novel-page[data-page="${currentPage}"]`).style.display = 'none';
+        const currentEl = pagesContainer.querySelector(`.novel-page[data-page="${currentPage}"]`);
+        if (currentEl) currentEl.style.display = 'none';
         
         // Show new
         currentPage = newPage;
-        pagesContainer.querySelector(`.novel-page[data-page="${currentPage}"]`).style.display = 'block';
+        const newEl = pagesContainer.querySelector(`.novel-page[data-page="${currentPage}"]`);
+        if (newEl) newEl.style.display = 'block';
 
         // Update controls
-        prevBtn.disabled = currentPage === 1;
-        nextBtn.disabled = currentPage === totalPages;
-        pageInfo.textContent = `${currentPage} / ${totalPages}`;
+        if (prevBtn) prevBtn.disabled = currentPage === 1;
+        if (nextBtn) nextBtn.disabled = currentPage === totalPages;
+        if (pageInfo) pageInfo.textContent = `${currentPage} / ${totalPages}`;
         
         // Update progress bar
-        progressBar.style.width = `${(currentPage/totalPages)*100}%`;
+        if (progressBar) progressBar.style.width = `${(currentPage/totalPages)*100}%`;
 
         // Scroll to top of content
         const headerHeight = document.querySelector('.header') ? document.querySelector('.header').offsetHeight : 0;
+        const scrollTarget = postContent.offsetTop - headerHeight - 20;
+        
         window.scrollTo({
-            top: postContent.offsetTop - headerHeight - 20,
+            top: scrollTarget > 0 ? scrollTarget : 0,
             behavior: 'smooth'
         });
     }
 
-    prevBtn.addEventListener('click', () => updatePage(currentPage - 1));
-    nextBtn.addEventListener('click', () => updatePage(currentPage + 1));
+    if (prevBtn) prevBtn.addEventListener('click', () => updatePage(currentPage - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => updatePage(currentPage + 1));
 });
