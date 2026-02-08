@@ -13,4 +13,4 @@ ___
 # 封面图
 
 画师为奇帕，让我们感谢他，他笔下的人物都非常可爱！
-![封面图](/images/novels/cover.png)
+![封面图](images/novels/cover.png)

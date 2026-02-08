@@ -1,7 +1,9 @@
 {{- if .Destination -}}
   {{- $dest := .Destination -}}
   {{- if not (or (hasPrefix $dest "http") (hasPrefix $dest "https") (hasPrefix $dest "//")) -}}
-    {{- $dest = $dest | relURL -}}
+    {{- /* Strip leading slash to ensure absURL appends to baseURL correctly */ -}}
+    {{- $dest = strings.TrimPrefix "/" $dest -}}
+    {{- $dest = $dest | absURL -}}
   {{- end -}}
   <img src="{{ $dest | safeURL }}" alt="{{ .Text }}" {{ with .Title}} title="{{ . }}"{{ end }} />
 {{- end -}}
