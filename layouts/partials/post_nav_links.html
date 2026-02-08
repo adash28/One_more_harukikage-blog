@@ -1,27 +1,36 @@
 {{- $pages := sort .CurrentSection.RegularPages "Weight" "asc" -}}
-<!-- Debug: Current Page: {{ .Title }} (Weight: {{ .Weight }}) -->
-<!-- Debug: Pages List: 
-{{- range $pages -}}
-  [{{ .Title }}: W{{ .Weight }}] 
+{{- $currentPage := . -}}
+{{- $prevPage := "" -}}
+{{- $nextPage := "" -}}
+{{- $found := false -}}
+
+{{- /* Manual iteration to find Prev/Next based on sorted list */ -}}
+{{- range $index, $page := $pages -}}
+  {{- if eq $page $currentPage -}}
+    {{- $found = true -}}
+    {{- /* Previous in list (index - 1) is "Previous Chapter" */ -}}
+    {{- if gt $index 0 -}}
+      {{- $prevPage = index $pages (sub $index 1) -}}
+    {{- end -}}
+    {{- /* Next in list (index + 1) is "Next Chapter" */ -}}
+    {{- if lt (add $index 1) (len $pages) -}}
+      {{- $nextPage = index $pages (add $index 1) -}}
+    {{- end -}}
+  {{- end -}}
 {{- end -}}
--->
-{{- if and (gt (len $pages) 1) (in $pages . ) -}}
+
+{{- if and (gt (len $pages) 1) $found -}}
 <nav class="paginav">
   {{- if eq .Type "novels" }}
-      {{- /* Novel Logic: Left = Older (Prev Chapter), Right = Newer (Next Chapter) 
-             Assuming Date Descending Order: [Ch3, Ch2, Ch1]
-             Current: Ch2
-             Next in List: Ch3 (Newer) -> "Next Chapter"
-             Prev in List: Ch1 (Older) -> "Previous Chapter"
-      */ -}}
-      {{- with $pages.Prev . }}
+      {{- /* Explicit Logic for Novels based on Weight ASC */ -}}
+      {{- with $prevPage }}
       <a class="prev" href="{{ .Permalink }}">
         <span class="title">« 上一章</span>
         <br>
         <span>{{- .Title -}}</span>
       </a>
       {{- end }}
-      {{- with $pages.Next . }}
+      {{- with $nextPage }}
       <a class="next" href="{{ .Permalink }}">
         <span class="title">下一章 »</span>
         <br>
