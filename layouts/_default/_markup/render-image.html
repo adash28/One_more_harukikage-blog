@@ -1,0 +1,7 @@
+{{- if .Destination -}}
+  {{- $dest := .Destination -}}
+  {{- if not (or (hasPrefix $dest "http") (hasPrefix $dest "https") (hasPrefix $dest "//")) -}}
+    {{- $dest = $dest | absURL -}}
+  {{- end -}}
+  <img src="{{ $dest | safeURL }}" alt="{{ .Text }}" {{ with .Title}} title="{{ . }}"{{ end }} />
+{{- end -}}
