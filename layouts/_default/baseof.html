@@ -218,7 +218,10 @@
     
     {{- /* Novel Pagination Script */ -}}
     {{- if eq .Type "novels" }}
-    <script src="{{ "js/novel-pagination.js" | absURL }}"></script>
+    {{- $novelScript := resources.Get "js/novel-pagination.js" }}
+    {{- if $novelScript }}
+    <script src="{{ $novelScript.RelPermalink }}"></script>
+    {{- end }}
     {{- end }}
 </body>
 
