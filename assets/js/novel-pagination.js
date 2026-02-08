@@ -1,24 +1,43 @@
 document.addEventListener("DOMContentLoaded", function() {
+    console.log("Novel pagination script loaded");
+
     // Only run on novel pages
     const postContent = document.querySelector('.post-content');
     // Check for 'novels' class on body or post-single (depending on implementation)
     const isNovel = document.body.classList.contains('type-novels') || 
                    document.querySelector('.post-single.novels') ||
                    window.location.pathname.includes('/novels/');
+    
+    console.log("postContent found:", !!postContent);
+    console.log("isNovel:", isNovel);
                    
     if (!postContent || !isNovel) return;
 
     // Filter valid content elements (paragraphs, headers, etc.)
     // We ignore script tags, style tags, and empty text nodes
-    const paragraphs = Array.from(postContent.children).filter(el => {
-        return !['SCRIPT', 'STYLE'].includes(el.tagName) && el.textContent.trim().length > 0;
+    const children = Array.from(postContent.children);
+    console.log("Total children count:", children.length);
+
+    const paragraphs = children.filter(el => {
+        const tagName = el.tagName;
+        const text = el.textContent.trim();
+        const isValid = !['SCRIPT', 'STYLE'].includes(tagName) && text.length > 0;
+        // console.log(`Tag: ${tagName}, Text length: ${text.length}, Valid: ${isValid}`);
+        return isValid;
     });
 
+    console.log("Valid paragraphs count:", paragraphs.length);
+
     // If content is short, don't paginate
-    if (paragraphs.length < 20) return;
+    if (paragraphs.length < 20) {
+        console.log("Content too short for pagination (< 20 paragraphs)");
+        return;
+    }
 
     const PARAGRAPHS_PER_PAGE = 20;
     const totalPages = Math.ceil(paragraphs.length / PARAGRAPHS_PER_PAGE);
+    console.log("Total pages:", totalPages);
+    
     let currentPage = 1;
 
     // Create pages container
@@ -45,6 +64,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Actually, safest is to clear all and append our container
     postContent.innerHTML = '';
     postContent.appendChild(pagesContainer);
+    console.log("Pagination applied to DOM");
 
     // Create Pagination Controls
     const controls = document.createElement('div');
@@ -80,6 +100,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const pageInfo = document.getElementById('novel-page-info');
 
     function updatePage(newPage) {
+        console.log("Updating page to:", newPage);
         if (newPage < 1 || newPage > totalPages) return;
 
         // Hide current
