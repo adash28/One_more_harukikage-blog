@@ -47,8 +47,8 @@ removePathAccents = true
     theme = "preferred_color_scheme"
     lang = "zh-CN"
     loading = "lazy"
-relativeURLs = true
-canonifyURLs = true
+# relativeURLs = true
+# canonifyURLs = true
 
 # 专业导航栏配置
 [[menu.main]]
