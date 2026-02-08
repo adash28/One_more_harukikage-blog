@@ -12,6 +12,146 @@
 
 <head>
     {{- partial "head.html" . }}
+    {{- if .IsHome }}
+    <style>
+        /* 关键样式内联，确保立即加载 */
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            cursor: pointer;
+            overflow: hidden;
+            background-color: #000; /* 黑色背景兜底，避免白屏 */
+        }
+
+        #welcome-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .welcome-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 使用 Hugo 处理路径，避免硬编码 */
+            background-image: url('{{ "images/welcome-background.jpg" | absURL }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+
+        .welcome-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 3;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: particleFloat 15s infinite ease-in-out;
+        }
+
+        .welcome-content {
+            position: relative;
+            text-align: center;
+            color: white !important;
+            z-index: 4;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .welcome-title {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: white !important;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeInUp 1.2s ease 0.2s both;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            color: white !important;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            animation: fadeInUp 1.2s ease 0.4s both;
+        }
+
+        .welcome-hint {
+            font-size: 1em;
+            opacity: 0.8;
+            color: white !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            animation: pulse 2s ease infinite;
+        }
+        
+        .welcome-logo {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        /* 动画定义 */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        @media screen and (max-width: 768px) {
+            .welcome-title { font-size: 2em; }
+            .welcome-subtitle { font-size: 1.2em; }
+            .welcome-logo { width: 100px; height: 100px; }
+        }
+        
+        /* 禁止首页滚动，直到欢迎页关闭 */
+        body.welcome-active {
+            overflow: hidden;
+        }
+    </style>
+    {{- end }}
 </head>
 
 {{- if (or (ne .Kind `page` ) (eq .Layout `archives`) (eq .Layout `search`)) }}
