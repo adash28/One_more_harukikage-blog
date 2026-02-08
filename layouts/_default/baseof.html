@@ -215,6 +215,11 @@
         {{- block "main" . }}{{ end }}
     </main>
     {{ partialCached "footer.html" . .Layout .Kind (.Param "hideFooter") (.Param "ShowCodeCopyButtons") -}}
+    
+    {{- /* Novel Pagination Script */ -}}
+    {{- if eq .Type "novels" }}
+    <script src="{{ "js/novel-pagination.js" | absURL }}"></script>
+    {{- end }}
 </body>
 
 </html>
