@@ -5,4 +5,4 @@ layout: "section"
 
 # 🎨 AIGC Works
 
-栏目施工中~
+该版块主要是分享AIGC方面的心得，以及分享一些满意的作品

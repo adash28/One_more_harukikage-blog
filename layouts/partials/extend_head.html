@@ -1,0 +1,4 @@
+{{- /* 仅在页面 Front Matter 或 hugo.toml 中开启 math 时加载 */ -}}
+{{- if or (.Params.math) (site.Params.math) }}
+{{ partial "math.html" . }}
+{{- end }}
