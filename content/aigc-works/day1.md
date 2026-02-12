@@ -1,5 +1,5 @@
 ---
-title: "本地部署与简易ComfyUI逻辑"
+title: "本地部署"
 date: 2026-02-10
 draft: false
 weight: 200

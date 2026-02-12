@@ -1,5 +1,5 @@
 ---
-title: "简易ComfyUI逻辑"
+title: "简易ComfyUI机理"
 date: 2026-02-12
 draft: false
 weight: 201
@@ -144,4 +144,6 @@ F. Scheduler (调度器)
 
 注意：VAE解码节点的VAE点要和加载checkpoint模型节点的VAE点连上，是因为你解码时需要根据模型的解码器进行反变换。不要忘记连了。（即上图中的红线）
 
-提醒：可通过修改保存图像节点中的文件前缀，来方便你在批量跑图时，区分不同的图片。（比如：设置文件前缀为test/bunch1，将会生成test/bunch1_00001.png、test/bunch1_00002.png等，以此类推的文件夹下的图片，储存在ComfyUI的output文件夹中）
+Tips：可通过修改保存图像节点中的文件前缀，来方便你在批量跑图时，区分不同的图片。（比如：设置文件前缀为test/bunch1，将会生成test/bunch1_00001.png、test/bunch1_00002.png等，储存在ComfyUI的output文件夹中）
+
+Tips:如果你觉得我的讲解还是略显繁琐，想要更简洁直观的介绍，这里有一个我在github上找到的简易英文教程，以微型galgame的形式呈现，有兴趣的可以去看一下。[https://comfyanonymous.github.io/ComfyUI_tutorial_vn/](https://comfyanonymous.github.io/ComfyUI_tutorial_vn/)
