@@ -12,12 +12,12 @@ categories: ["AIGC Works"]
 
 ComfyUI的工作流其实就是ai生成图片的过程，搭建工作流的过程中，我们对其各个环节的认识也会更加深刻。我们接触的第一个节点就是加载checkpoint模型，故需要认识的第一个模型是checkpoint模型。在最简单的工作流中，只需加入这一个模型就能跑。在这个模型里储存的.safetensors文件（你需要把在外面下载的checkpoint模型文件放到ComfyUI/models/checkpoints/文件夹下），这个文件分为CLIP，base model，vae三个核心组件、
 
-# base model
+## base model
 提到base model，我们就不得不讲到扩散模型。Diffusion（扩散）模型认为，世界上任何图片都可以通过“不断加噪”变成一团乱码。那么生成图片的过程就是“反向去噪”（denoising）的过程，即从乱码开始，通过不断去噪，最终生成图片。
 
 目前base model常用的架构有两种。一种是SD1.5，SDXL等使用的UNet；另一种是大家耳熟能详的Transformer架构，SD3 / Flux等使用。
 
-## UNet 架构
+### UNet 架构
 UNet 最初是由 Olaf Ronneberger 等人在 2015 年为医疗影像分割设计的，因其网络结构图呈现对称的 “U”形 而得名。在 Stable Diffusion (SD 1.5/XL) 的 Base Model 中，它被改进并用作核心的噪声预测器 。网络架构如下图所示。
 
 ![UNet 架构图](images/aigc_blogs/unet.png)
@@ -37,7 +37,7 @@ UNet 最初是由 Olaf Ronneberger 等人在 2015 年为医疗影像分割设计
 - 这是 UNet 的灵魂： 在 U 形结构的每一层，Encoder 提取的特征图（Feature Map）会直接横向传递，并与 Decoder 对应层的特征图进行拼接（Concatenation） 。
 - 为什么它重要呢？因为在深度学习中，数据经过层层压缩会丢失大量细节信息 （比如边缘的锐利度）。跳跃连接允许 Decoder 直接引用来自 Encoder 的“原始记忆”。这保证了模型在生成图像时，既能把握全局逻辑，又不会丢失极细微的纹理细节。
 
-## Transformer 架构
+### Transformer 架构
 Transformer 架构最初由 Vaswani 等人在 2017 年提出，被广泛应用于多种任务。它的核心思想是基于注意力机制（Attention Mechanism），能够有效捕捉序列中不同位置之间的依赖关系。
 
 在 SD3 / Flux 中，Transformer 架构将图像（潜空间数据）切分为 Patches（图块） 并线性嵌入为 Tokens 。这个过程虽然在特征提取的初衷上与 UNet 的 Encoder 相似，但在机理上有本质不同：UNet依靠卷积（Convolution） 的局部感受野逐层压缩信息；而 Transformer 则通过自注意力机制（Self-Attention） ，让每一个图块 Token 都能在全局范围内与其他图块以及文本 Token 进行信息交换。这种‘全局视野’使得模型在处理复杂的构图逻辑和文字对齐时表现优异。
