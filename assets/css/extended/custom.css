@@ -100,3 +100,26 @@
     width: 0%;
     transition: width 0.3s ease;
 }
+
+/* --- 样式工具箱 --- */
+
+/* 1. 简单加粗 */
+.fw-bold {
+    font-weight: bold;
+}
+
+/* 2. 红色高亮文本 */
+.text-danger {
+    color: #e74c3c; /* 危险红 */
+}
+
+/* 3. 蓝色强调文本 */
+.text-primary {
+    color: #3498db; /* 主题蓝 */
+}
+
+/* 4. 橙色警告文本，并加粗 */
+.text-warning {
+    color: #f39c12; /* 警告橙 */
+    font-weight: bold;
+}
